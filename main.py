@@ -69,25 +69,6 @@ max_try_again = 3
 level_cleared = False
 game_over = False
 
-# Update enemy bird positions and handle collisions
-hits = pygame.sprite.spritecollide(player, enemies, True)
-
-if hits:
-    for hit_enemy in hits:
-        hit_enemy.hit_enemy()
-
-# Reset enemy bird positions
-for enemy in enemies:
-    if enemy.rect.right < 0:
-        enemy.rect.left = SCREEN_WIDTH
-        enemy.rect.top = random.randint(50, SCREEN_HEIGHT - 50)
-
-# Reset player bird's position if it goes off-screen
-if player.rect.left > SCREEN_WIDTH or player.rect.right < 0 or \
-        player.rect.top > SCREEN_HEIGHT or player.rect.bottom < 0:
-    player.rect.center = (100, SCREEN_HEIGHT // 2)
-    player.velocity = [0, 0]
-
 # Enter the game loop
 while True:
     for event in pygame.event.get():
@@ -135,6 +116,25 @@ while True:
                     try_again_counter += 1
             else:
                 break
+       
+    # Update enemy bird positions and handle collisions
+    hits = pygame.sprite.spritecollide(player, enemies, True)
+
+    if hits:
+        for hit_enemy in hits:
+            score += hit_enemy.hit_enemy()
+
+    # Reset enemy bird positions
+    for enemy in enemies:
+        if enemy.rect.right < 0:
+            enemy.rect.left = SCREEN_WIDTH
+            enemy.rect.top = random.randint(50, SCREEN_HEIGHT - 50)
+
+    # Reset player bird's position if it goes off-screen
+    if player.rect.left > SCREEN_WIDTH or player.rect.right < 0 or \
+            player.rect.top > SCREEN_HEIGHT or player.rect.bottom < 0:
+        player.rect.center = (100, SCREEN_HEIGHT // 2)
+        player.velocity = [0, 0]     
 
     # Clear the screen and draw the background
     screen.blit(background_image, (0, 0))

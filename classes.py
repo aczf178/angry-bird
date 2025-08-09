@@ -42,10 +42,8 @@ class Player(pygame.sprite.Sprite):
         self.velocity = [speed * math.cos(direction), 
                          speed * math.sin(direction)]
         
-        def hit_enemy(self):
-            # Handle collision with enemy bird
-            global score
-            score += 100
+    def hit_enemy(self):
+        return 100
 
 # Define the Button class
 class Button(pygame.sprite.Sprite):
